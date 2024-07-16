@@ -11,7 +11,7 @@ def do_nginx_stats():
     no_of_docs = nginx_check.count_documents({})
     print("{} logs".format(no_of_docs))
     print("Methods:")
-    hold_x = ["GET", "POST", "PUT", "PATH", "DELETE"]
+    hold_x = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     for h in hold_x:
         count_h = nginx_check.count_documents({"method": h})
         print(f"\tmethod {h}: {count_h}")
