@@ -25,7 +25,7 @@ def url_access_count(method):
 
         alx.incr(count_k)
         alx.set(key_cach, html_cont, ex=10)
-        alx.expire(key_cache, 10)
+        alx.expire(key_cach, 10)
         return html_cont
     return wrapper
 
@@ -38,5 +38,4 @@ def get_page(url: str) -> str:
 
 
 if __name__ == "__main__":
-    """Get the html content of the particular page"""
     get_page("http://slowwly.robertomurray.co.uk")
