@@ -6,27 +6,22 @@ web cache and tracker
 import requests
 import redis
 from functools import wraps
+from typing import Callable
 
-alx = redis.Redis()
 
-
-def url_access_count(method):
+def url_access_count(method: Callable) -> Callable:
     """Keep track of the number of times a url is accessed"""
     @wrap(method)
-    def wrapper(url):
-        key_cach = "cached:" + url
-        key_cache = alx.get(key_cach)
-        if key_cache:
-            return key_cache.decode("utf-8")
-
-        # Get new content, update cache
-        count_k = "count:" + url
-        html_cont = method(url)
-
-        alx.incr(count_k)
-        alx.set(key_cach, html_cont, ex=10)
-        alx.expire(key_cach, 10)
-        return html_cont
+    def wrapper(url: str) -> str:
+        """Checks out for wrapped function"""
+        alx = redis.Redis()
+        alx.incr(f'count:{url}')
+        cache_p = alx.get(f'{url}')
+        if cache_p:
+            return cache_p.decode("utf-8")
+        response = method(url)
+        alx.set(f'{url}', response, 10)
+        return response
     return wrapper
 
 
