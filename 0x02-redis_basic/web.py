@@ -19,7 +19,7 @@ def url_access_count(method: Callable) -> Callable:
         if cache_p:
             return cache_p.decode("utf-8")
         response = method(url)
-        alx.setex(f'{url}', response, 10)
+        alx.setex(f'{url}', 10, response)
         return response
     return wrapper
 
