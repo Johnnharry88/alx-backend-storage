@@ -43,18 +43,18 @@ def replay(fn: Callable):
     #prints out funcion_name{f_name{} and no of times called {value}
     print("{} was called {} times:".format(f_name, v))
     
-    inputs = r.lrange("{}:inputs".format(f_name), 0, -1)
+    inputs = red.lrange("{}:inputs".format(f_name), 0, -1)
 
-    outputs = r.lrange("{}:outputs".format(f_name), 0, -1)
+    outputs = red.lrange("{}:outputs".format(f_name), 0, -1)
 
     for i, o in zip(inputs, outputs):
         try:
-            input = input.decode("utf-8")
+            input = i.decode("utf-8")
         except Exception:
             input = ""
 
         try:
-            output = output.decode("utf-8")
+            output = o.decode("utf-8")
         except Exception:
             output = ""
 
