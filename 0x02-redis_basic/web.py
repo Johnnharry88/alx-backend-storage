@@ -10,7 +10,7 @@ from typing import Callable
 
 def url_access_count(method: Callable) -> Callable:
     """Keep track of the number of times a url is accessed"""
-    @wrap(method)
+    @wraps(method)
     def wrapper(url: str) -> str:
         """Checks out for wrapped function"""
         alx = redis.Redis()
