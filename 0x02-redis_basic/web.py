@@ -21,12 +21,12 @@ def url_access_count(method):
 
         # Get new content, update cache
         count_k = "count:" + url
-        html_content = method(url)
+        html_cont = method(url)
 
         alx.incr(count_k)
-        alx.set(key_cache, html_cont, ex=10)
+        alx.set(key_cach, html_cont, ex=10)
         alx.expire(key_cache, 10)
-        return html_content
+        return html_cont
     return wrapper
 
 
@@ -38,4 +38,5 @@ def get_page(url: str) -> str:
 
 
 if __name__ == "__main__":
+    """Get the html content of the particular page"""
     get_page("http://slowwly.robertomurray.co.uk")
