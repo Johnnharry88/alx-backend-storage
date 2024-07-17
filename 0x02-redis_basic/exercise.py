@@ -40,9 +40,9 @@ def replay(fn: Callable):
         v = int(v.decode("utf-8"))
     except Exception:
         v = 0
-    #prints out funcion_name{f_name{} and no of times called {value}
+    # prints out funcion_name{f_name{} and no of times called {value}
     print("{} was called {} times:".format(f_name, v))
-    
+
     inputs = red.lrange("{}:inputs".format(f_name), 0, -1)
 
     outputs = red.lrange("{}:outputs".format(f_name), 0, -1)
@@ -64,7 +64,7 @@ def replay(fn: Callable):
 
 class Cache:
     """Create a Cache class"""
-    
+
     def __init__(self):
         """Stores instance of the Redis Client"""
         self._redis = redis.Redis()
@@ -72,15 +72,14 @@ class Cache:
 
     @count_calls
     @call_history
-
-    def store(self, data: Union[str, int, bytes, float]) -> str:
+    def store(self, data: Union[str, bytes, int, float]) -> str:
         """generate random key"""
         rand_key = str(uuid4())
         self._redis.set(rand_key, data)
         return rand_key
 
     def get(self, key: str,
-            fn: Optional[callable] = None) -> Union[str, int, bytes, float]:
+            fn: Optional[callable] = None) -> Union[str, bytes, int, float]:
         """Changes data back to desired format"""
         vlue = self._redis.get(key)
         if fn:
