@@ -19,7 +19,8 @@ def url_access_count(method: Callable) -> Callable:
         if cache_p:
             return cache_p.decode("utf-8")
         response = method(url)
-        alx.set(f'cached{url}', response, 10)
+        alx.set(f'cached{url}', response, ex=10)
+        alx.expire(f'cached{url}', 10)
         return response
     return wrapper
 
