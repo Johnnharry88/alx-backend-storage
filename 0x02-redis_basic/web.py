@@ -15,11 +15,11 @@ def url_access_count(method: Callable) -> Callable:
         """Checks out for wrapped function"""
         alx = redis.Redis()
         alx.incr(f'count:{url}')
-        cache_p = alx.get(f'{url}')
+        cache_p = alx.get(f' cached:{url}')
         if cache_p:
             return cache_p.decode("utf-8")
         response = method(url)
-        alx.setex(f'{url}', 10, response)
+        alx.setex(f'cached{url}', 10, response)
         return response
     return wrapper
 
