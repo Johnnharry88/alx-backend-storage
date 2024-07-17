@@ -15,7 +15,7 @@ def url_access_count(method):
     @wrap(method)
     def wrapper(url):
         key_cach = "cached:" + url
-        key_cache = alx.get(key)
+        key_cache = alx.get(key_cach)
         if key_cache:
             return key_cache.decode("utf-8")
 
