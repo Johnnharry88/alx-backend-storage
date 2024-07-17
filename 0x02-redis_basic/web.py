@@ -15,13 +15,15 @@ def url_access_count(method: Callable) -> Callable:
     @wraps(method)
     def wrapper(url: str) -> str:
         """Checks out for wrapped function"""
-        alx.incr(f'count:{url}')
-        cache_p = alx.get(f'cached:{url}')
+        x = "cached:" + url
+        y = "count:" + url
+        alx.incr(y)
+        cache_p = alx.get(x)
         if cache_p:
             return cache_p.decode("utf-8")
         response = method(url)
-        alx.set(f'cached{url}', response, ex=10)
-        alx.expire(f'cached{url}', 10)
+        alx.set(x, response, ex=10)
+        alx.expire(x, 10)
         return response
     return wrapper
 
