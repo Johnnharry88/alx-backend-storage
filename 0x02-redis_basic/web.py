@@ -14,7 +14,8 @@ def url_access_count(method):
     """Keep track of the number of times a url is accessed"""
     @wrap(method)
     def wrapper(url):
-        key_cache = "cached:" + url
+        key_cach = "cached:" + url
+        key_cache = alx.get(key)
         if key_cache:
             return key_cache.decode("utf-8")
 
