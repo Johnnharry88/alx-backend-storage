@@ -7,13 +7,14 @@ import redis
 from functools import wraps
 from typing import Callable
 
+alx = redis.Redis()
+
 
 def url_access_count(method: Callable) -> Callable:
     """Keep track of the number of times a url is accessed"""
     @wraps(method)
     def wrapper(url: str) -> str:
         """Checks out for wrapped function"""
-        alx = redis.Redis()
         alx.incr(f'count:{url}')
         cache_p = alx.get(f'cached:{url}')
         if cache_p:
